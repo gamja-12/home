@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    <style>
+        #wrap{ display: flex; gap: 10px;}
+        .box {
+            background-color: rgb(250, 200, 0);
+            width: 100px;
+            height: 100px;
+
+            transition: 1s;
+        }
+        #wrap:hover>div{
+            height: 200px;
+        }
+        .box:nth-child(1){
+            transition-timing-function: linear;
+        }
+        .box:nth-child(2){
+            transition-timing-function: ease;
+        }
+        .box:nth-child(3){
+            transition-timing-function: ease-in;
+        }
+        .box:nth-child(4){
+            transition-timing-function: ease-in-out;
+        }
+    </style>
+</body>
+
+</html>
