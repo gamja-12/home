@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        A:hover {
+            text-decoration: underline;
+        }
+
+        #header {
+            padding: 10px 30px;
+            background-color: rgb(180, 170, 235);
+        }
+
+        #menu {
+            position: relative;
+            height: 50px;
+            background-color: rgb(200, 150, 200);
+            text-align: center;
+        }
+
+        /* #menu ul{overflow: hidden;} */
+
+        #menu li {
+            float: left;
+        }
+
+        #menu>#left-menu {
+            background-color: rgb(230, 230, 255);
+            position: absolute;
+            left: 0;
+        }
+
+        #menu>#right-menu {
+            background-color: rgb(230, 230, 255);
+            position: absolute;
+            right: 0;
+        }
+    </style>
+    <style>
+        #container>div {
+            background-color:;
+            animation-name: loading;
+            animation-duration: 1.5s;
+            animation-iteration-count: 1;
+        }
+
+        @keyframes loading{
+            0%{
+                transform: rotate(0deg);
+            }
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div style="position: fixed; width: 100%;">
+            <div id="header">
+                <h1>Title 상단 고정</h1>
+            </div>
+            <div id="menu">
+                <div id="left-menu">
+                    <ul>
+                        <li><a href="">JavaScript</a></li>
+                        <li><a href="">React</a></li>
+                        <li><a href="">Node</a></li>
+                    </ul>
+                </div>
+                <div id="right-menu">
+                    <ul>
+                        <li><a href="">GitHub</a></li>
+                        <li><a href="">Aws</a></li>
+                        <li><a href="">Docker</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <style>
+            ul li a {
+                display: inline-block;
+                width: 150px;
+                line-height: 50px;
+            }
+        </style>
+
+        <div id="content" style="padding-top: 110px;">
+            <div id="left">
+                <h1>Title</h1>
+                <P>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam sed optio enim ipsum magni
+                    officia hic iure recusandae facere adipisci ea quis blanditiis voluptas consequuntur dolorum,
+                    nihil tempore excepturi repellat.</P>
+            </div>
+            <div id="right">
+                <div style="padding-right: 200px;">
+                    <h1>Lorem</h1>
+                    <P>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam sed optio enim ipsum magni
+                        officia hic iure recusandae facere adipisci ea quis blanditiis voluptas consequuntur dolorum,
+                        nihil tempore excepturi repellat.</P>
+                    <h1>Lorem</h1>
+                    <P>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam sed optio enim ipsum magni
+                        officia hic iure recusandae facere adipisci ea quis blanditiis voluptas consequuntur dolorum,
+                        nihil tempore excepturi repellat.</P>
+                    <h1>Lorem</h1>
+                    <P>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam sed optio enim ipsum magni
+                        officia hic iure recusandae facere adipisci ea quis blanditiis voluptas consequuntur dolorum,
+                        nihil tempore excepturi repellat.</P>
+                    <h1>Lorem</h1>
+                    <P>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam sed optio enim ipsum magni
+                        officia hic iure recusandae facere adipisci ea quis blanditiis voluptas consequuntur dolorum,
+                        nihil tempore excepturi repellat.</P>
+                    <h1>Lorem</h1>
+                    <P>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam sed optio enim ipsum magni
+                        officia hic iure recusandae facere adipisci ea quis blanditiis voluptas consequuntur dolorum,
+                        nihil tempore excepturi repellat.</P>
+                    <h1>Lorem</h1>
+                    <P>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam sed optio enim ipsum magni
+                        officia hic iure recusandae facere adipisci ea quis blanditiis voluptas consequuntur dolorum,
+                        nihil tempore excepturi repellat.</P>
+                </div>
+            </div>
+        </div>
+        <style>
+            #content {
+                overflow: hidden;
+                min-width: 760px;
+            }
+
+            #content>div {
+                float: left;
+            }
+
+            #left {
+                padding: 30px;
+                width: 200px;
+                background-color: rgb(200, 200, 255);
+            }
+
+            #right {
+                padding-left: 10px;
+                margin-right: -200px;
+                width: 100%;
+                background-color: rgb(220, 220, 255);
+            }
+        </style>
+        <div style="text-align: center; padding: 20px;">
+            <h1>COPY RIGHT DDD</h1>
+        </div>
+</body>
+
+</html>
