@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /**/
+        #wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-areas: 
+            "item1 item1 item2"
+            "item3 item3 item3"
+            "item4 .     item5"
+            ;
+        }
+
+        .items {
+            border: 1px solid black;
+            /* overflow: hidden; */
+            padding: 10px;
+            background-color: rgb(200, 200, 255);
+        }
+
+        .items:nth-child(2n) {
+            background-color: rgb(150, 150, 255);
+        }
+
+        .items1 {grid-area: item1;}
+
+        .items2 {grid-area: item2;}
+
+        .items3 {grid-area: item3;}
+
+        .items4 {grid-area: item4;}
+
+        .items-blank {
+        }
+        
+        .items5 {
+            grid-area: item5;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div class="items items1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo mollitia, vero eos
+            minus
+            fuga nobis sequi corporis maiores nisi sunt dignissimos soluta nam ducimus omnis optio commodi enim
+            voluptatum. Dolores!</div>
+        <div class="items items2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo mollitia, vero eos
+            minus
+            fuga nobis sequi corporis maiores nisi sunt dignissimos soluta nam ducimus omnis optio commodi enim
+            voluptatum. Dolores!</div>
+        <div class="items items3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo mollitia, vero eos
+            minus
+            fuga nobis sequi corporis maiores nisi sunt dignissimos soluta nam ducimus omnis optio commodi enim
+            voluptatum. Dolores!</div>
+        <div class="items items4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo mollitia, vero eos
+            minus
+            fuga nobis sequi corporis maiores nisi sunt dignissimos soluta nam ducimus omnis optio commodi enim
+            voluptatum. Dolores!</div>
+        <div class="items-blank"></div>
+        <div class="items items5">consectetur magna</div>
+    </div>
+</body>
+
+</html>
