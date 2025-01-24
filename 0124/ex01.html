@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{margin: 0; padding: 0; box-sizing: border-box;}
+        div>div {
+            border: 1px solid black;
+            height: 300px;
+            width: 230px;
+            animation-name: aa;
+            animation-duration: initial;
+        }
+
+        @keyframes aa {
+            0% {transform: rotate(0deg);}
+
+            100% {transform:  rotate(90deg);}
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div></div>
+    </div>
+</body>
+
+</html>
+<script>
+    const a = prompt('a값 입력하세요');
+    console.log("a =" + a);
+    const b = prompt('b값 입력하세요');
+    console.log("b =" + b);
+
+    const c = Number(a)
+    const d = Number(b)
+
+    const e = c + d;
+
+    console.log('덧셈 결과' + (c + d));
+    console.log('e:' + e);
+
+    document.write('덧셈 결과' + (c + d));
+
+    const value = '1,000';
+    const trans_value = Number(value);
+    document.write('trans_value =' + trans_value);
+</script>
