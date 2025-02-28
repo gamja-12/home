@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>룰렛</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .roulette-container {
+            text-align: center;
+            width: 300px;
+            position: relative;
+        }
+        .roulette {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 5px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: lightgray;
+            transition: transform 3s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        .choice {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: black; /* 텍스트 색만 검정으로 설정 */
+            transform-origin: 100% 100%;
+            z-index: 1;
+            clip-path: polygon(100% 100%, 100% 0, 0 0, 0 100%); /* 삼각형 형태로 자르기 */
+            border: 2px solid black; /* 테두리 추가 */
+        }
+        .arrow {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 30px solid black;
+            z-index: 10;
+        }
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .button {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .button:disabled {
+            background-color: #bbb;
+            cursor: not-allowed;
+        }
+        #choices-container {
+            margin-top: 20px;
+            text-align: left;
+            width: 300px;
+            margin-bottom: 20px;
+        }
+        #choices-container div {
+            display: flex;
+            justify-content: space-between;
+        }
+        #choices {
+            width: 70%;
+            padding: 5px;
+            font-size: 16px;
+        }
+        .add-button {
+            width: 25%;
+            padding: 5px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .choice-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        .choice-item span {
+            width: 70%;
+            text-align: center;
+        }
+        .delete-button, .edit-button {
+            background-color: white;
+            color: black;
+            border: 1px solid black;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .edit-input {
+            width: 80%;
+            padding: 5px;
+            font-size: 16px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        #choicesList {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-start;
+            margin-top: 10px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>룰렛</h1>
+    <div class="roulette-container">
+        <div class="arrow" id="arrow"></div> <!-- 삼각형을 룰렛 내부가 아니라 밖에 배치 -->
+        <div class="roulette" id="roulette">
+            <span id="result"></span>
+        </div>
+        <div class="button-container">
+            <button class="button" id="spinButton" onclick="spinRoulette()" disabled>룰렛 돌리기</button>
+            <button class="button" id="resetButton" onclick="resetRoulette()">룰렛 초기화</button>
+        </div>
+        <div id="choices-container">
+            <div>
+                <input type="text" id="choices" placeholder="선택지를 입력하세요">
+                <button class="add-button" id="addChoiceButton">추가</button>
+            </div>
+            <div id="choicesList"></div>
+        </div>
+    </div>
+
+    <script>
+        let options = [];
+        let isSpinning = false;
+
+        document.getElementById("choices").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                addChoice();
+            }
+        });
+
+        document.getElementById("addChoiceButton").addEventListener("click", addChoice);
+
+        function addChoice() {
+            const input = document.getElementById("choices").value.trim();
+            if (input !== "" && !options.includes(input)) {
+                options.push(input);
+                updateChoicesList();
+            }
+            document.getElementById("choices").value = "";
+        }
+
+        function updateChoicesList() {
+            const choicesList = document.getElementById("choicesList");
+            choicesList.innerHTML = '';
+
+            options.forEach((option, index) => {
+                const choiceItem = document.createElement("div");
+                choiceItem.className = "choice-item";
+                choiceItem.innerHTML =
+                    `<span>${option}</span>
+                    <div>
+                        <button class="edit-button" onclick="editChoice(${index})">수정</button>
+                        <button class="delete-button" onclick="deleteChoice(${index})">삭제</button>
+                    </div>`;
+                choicesList.appendChild(choiceItem);
+            });
+
+            if (options.length > 0) {
+                document.getElementById("spinButton").disabled = false;
+                updateRoulette();
+            }
+        }
+
+        function editChoice(index) {
+            const newChoice = prompt("새로운 선택지를 입력하세요:", options[index]);
+            if (newChoice !== null && newChoice.trim() !== "") {
+                options[index] = newChoice.trim();
+                updateChoicesList();
+            }
+        }
+
+        function deleteChoice(index) {
+            options.splice(index, 1);
+            updateChoicesList();
+        }
+
+        function updateRoulette() {
+            const roulette = document.getElementById("roulette");
+            const anglePerChoice = 360 / options.length;
+            roulette.innerHTML = ''; // 삼각형을 제외한 부분 초기화
+
+            options.forEach((option, index) => {
+                const choiceElement = document.createElement("div");
+                choiceElement.className = "choice";
+                const angle = anglePerChoice * index;
+                choiceElement.style.transform = `rotate(${angle}deg) translateY(-60%) rotate(-${angle}deg)`; // 글씨를 룰렛 중심부에 더 가까이 배치
+
+                choiceElement.innerText = option; // 색상 없이 텍스트만 표시
+                roulette.appendChild(choiceElement);
+            });
+        }
+
+        function spinRoulette() {
+            if (isSpinning) return;
+
+            isSpinning = true;
+            const randomIndex = Math.floor(Math.random() * options.length);
+            const randomDegree = 360 * (3 + randomIndex);
+            document.getElementById("roulette").style.transform = `rotate(${randomDegree}deg)`;
+
+            setTimeout(() => {
+                document.getElementById("result").textContent = `선택된 결과: ${options[randomIndex]}`;
+                resetRoulette();
+            }, 3000);
+        }
+
+        function resetRoulette() {
+            setTimeout(() => {
+                document.getElementById("result").textContent = "";
+                isSpinning = false;
+                document.getElementById("spinButton").disabled = true;
+                document.getElementById("roulette").style.transform = "rotate(0deg)";
+            }, 500);
+        }
+    </script>
+</body>
+</html>

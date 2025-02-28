@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강제 선택 룰렛</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        #choices {
+            width: 300px;
+            height: 100px;
+            border: 2px solid #333;
+            padding: 5px;
+        }
+
+        #roulette-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        #roulette {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(#FF6347 0% 33%, #FFD700 33% 66%, #32CD32 66% 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            border: 5px solid #333;
+            position: relative;
+            transition: transform 3s ease-out;
+        }
+
+        #roulette::after {
+            content: '\25B2';
+            /* 역삼각형 (▲) */
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            color: black;
+        }
+
+        .spinning {
+            transform: rotate(1440deg);
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:disabled {
+            background-color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>강제 선택 룰렛</h1>
+    <textarea id="choices" placeholder="선택지를 줄바꿈으로 입력하세요"></textarea><br>
+    <button onclick="createRoulette()">룰렛 만들기</button>
+    <button id="spinBtn" onclick="spinRoulette()" disabled>룰렛 돌리기</button>
+    <button onclick="resetRoulette()">룰렛 삭제</button>
+    <div id="roulette-container">
+        <div id="roulette">룰렛 준비</div>
+    </div>
+
+    <script>
+        let options = [];
+        let hasSpun = false;
+
+        function createRoulette() {
+            if (hasSpun) {
+                alert("룰렛을 다시 만들려면 새로고침하세요!");
+                return;
+            }
+
+            const input = document.getElementById("choices").value.trim();
+            options = input.split('\n').map(choice => choice.trim()).filter(choice => choice);
+
+            if (options.length < 2) {
+                alert("최소 2개 이상의 선택지를 입력하세요.");
+                return;
+            }
+
+            document.getElementById("spinBtn").disabled = false;
+            document.getElementById("roulette").innerText = "룰렛 준비 완료!";
+        }
+
+        function spinRoulette() {
+            if (hasSpun || options.length === 0) return;
+
+            const randomIndex = Math.floor(Math.random() * options.length);
+            const result = options[randomIndex];
+            const roulette = document.getElementById("roulette");
+
+            roulette.classList.add("spinning");
+            setTimeout(() => {
+                roulette.classList.remove("spinning");
+                roulette.innerText = result;
+                hasSpun = true;
+                document.getElementById("spinBtn").disabled = true;
+                options = []; // 선택지 초기화 (다시 돌릴 수 없도록)
+            }, 3000);
+        }
+
+        function resetRoulette() {
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>
